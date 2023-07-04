@@ -1,8 +1,8 @@
-import { LoaderData, LoaderFunction, RawData } from "./types";
+import { LoaderData, RawData } from "./types";
 
 export class Loader<T> {
   private readonly _data: LoaderData<T>[];
-  private loader: LoaderFunction<T> = null;
+  public loader: Function | null = null;
 
   constructor(data: T[]) {
     this._data = this.transformInputDataIntoLoaderData(data);
@@ -34,7 +34,7 @@ export class Loader<T> {
     return this._data;
   }
 
-  public setLoader<F extends T>(loader: LoaderFunction<F>): void {
-    this.loader = loader
+  public set loaderFunction(loader: Function) {
+    this.loader = loader;
   }
 }

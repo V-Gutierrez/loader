@@ -21,3 +21,13 @@ const newLoader = new Loader(dataToBeLoaded);
 newLoader.data.forEach((item) => {
   console.log(item);
 })
+
+const loaderFunc = async (url: string) => {
+  const response = await fetch(url);
+
+  const data = await response.json();
+  return data;
+}
+
+
+newLoader.loaderFunction = loaderFunc
