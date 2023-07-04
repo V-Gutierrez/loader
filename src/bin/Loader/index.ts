@@ -1,3 +1,5 @@
+import { LoaderData, RawData } from "./types";
+
 export class Loader<T> {
   private readonly _data: LoaderData<T>[];
 
@@ -27,7 +29,7 @@ export class Loader<T> {
    * The function returns an array of LoaderData objects.
    * @returns The `seeData` method is returning an array of `LoaderData` objects.
    */
-  public get seeData(): LoaderData<T>[] {
+  public get data(): LoaderData<T>[] {
     return this._data;
   }
 }
