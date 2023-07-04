@@ -9,7 +9,7 @@ describe("Loader", () => {
   });
 
   it("should transform input data into loader data objects", () => {
-    const loader = new Loader(mockData);
+    const loader = new Loader(mockData, mockLoader);
 
     expect(loader.data).toHaveLength(mockData.length);
 
@@ -23,28 +23,16 @@ describe("Loader", () => {
   });
 
   it("should set the loader function", () => {
-    const loader = new Loader(mockData);
+    const loader = new Loader(mockData, mockLoader);
 
-    expect(loader.loader).toBeNull();
-
-    loader.loaderFunction = mockLoader;
-
+    expect(loader.loader).not.toBeNull();
     expect(loader.loader).toBe(mockLoader);
   });
 
-  it("should throw an error if loader function is not defined", async () => {
-    const loader = new Loader(mockData);
-
-    await expect(loader.load("data")).rejects.toThrow("Loader function is not defined");
-  });
-
   it("should load data and update items", async () => {
-    const loader = new Loader(mockData);
-    loader.loaderFunction = mockLoader;
+    const loader = new Loader(mockData, mockLoader);
 
-    await loader.load("data");
-    await loader.load("data");
-    await loader.load("data");
+    await loader.load("data", 3);
 
     expect(mockLoader).toHaveBeenCalledTimes(mockData.length);
 

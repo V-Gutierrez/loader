@@ -4,8 +4,9 @@ export class Loader<T> {
   private readonly _data: LoaderData<T>[];
   public loader: Function | null = null;
 
-  constructor(data: T[]) {
+  constructor(data: T[], loader: Function) {
     this._data = this.transformInputDataIntoLoaderData(data);
+    this.loader = loader;
   }
 
   /**
@@ -36,15 +37,6 @@ export class Loader<T> {
   }
 
   /**
-   * The function sets the loader function for a TypeScript class.
-   * @param {Function} loader - The `loader` parameter is a function that will be used to load data or
-   * perform any other necessary operations.
-   */
-  public set loaderFunction(loader: Function) {
-    this.loader = loader;
-  }
-
-  /**
    * The `load` function asynchronously loads data based on a specified key from the `rawData` property
    * of each item in the `data` array, using a loader function, and updates the corresponding item with
    * the loaded value.
@@ -52,10 +44,10 @@ export class Loader<T> {
    * valid key of the `RawData<T>` type. The `RawData<T>` type is not provided in the code snippet, so
    * I cannot determine the exact keys available. However, you
    */
-  public async load<T>(rawDataKey: keyof T) {
-    if (this.loader === null) {
-      throw new Error("Loader function is not defined");
-    }
+  public async load<T>(rawDataKey: keyof T, preloadDepth?: number) {
+    const lastLoadedIndex = this.data.findIndex((item) => item.metadata.isLoaded);
+
+    if (preloadDepth && preloadDepth > 0) await this.preLoad<T>(lastLoadedIndex, preloadDepth)
 
     const dataToLoad = this.data.filter((item) => item.metadata.shouldLoad);
 
@@ -68,6 +60,20 @@ export class Loader<T> {
         this.updateItemAfterLoading(dataToLoad[index].metadata._id, value);
       })
     })
+  }
+
+  /**
+   * The function preLoad is a private asynchronous function that sets the shouldLoad property of
+   * metadata to true for a range of items in the _data array.
+   * @param [startIndex=1] - The startIndex parameter is the index at which the preloading should
+   * start. It determines the first item in the data array that should be marked for loading.
+   * @param [preloadDepth=1] - The `preloadDepth` parameter determines how many items should be
+   * preloaded. It specifies the number of items to preload starting from the `startIndex`.
+   */
+  private async preLoad(startIndex = 1, preloadDepth = 1) {
+    for (let index = startIndex; index <= startIndex + preloadDepth; index++) {
+      if (this._data[index]) this._data[index].metadata.shouldLoad = true;
+    }
   }
 
   /**
