@@ -4,6 +4,10 @@
   "description": "My interpretation of a toy loader algorithm",
   "main": "src/main.ts",
   "author": "v-gutierrez",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/V-Gutierrez/loader.git"
+  },
   "license": "MIT",
   "scripts": {
     "start": "nodemon",
