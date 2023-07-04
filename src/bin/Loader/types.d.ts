@@ -7,6 +7,7 @@ export interface LoaderData<T> {
 export interface LoaderMetadata {
   shouldLoad: boolean;
   isLoaded: boolean;
+  _id: string;
 }
 
 export interface RawData<K> {
