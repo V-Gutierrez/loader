@@ -47,7 +47,7 @@ export class Loader<T> {
   public async load<T>(rawDataKey: keyof T, preloadDepth?: number) {
     const lastLoadedIndex = this.data.findIndex((item) => item.metadata.isLoaded);
 
-    if (preloadDepth && preloadDepth > 0) await this.preLoad<T>(lastLoadedIndex, preloadDepth)
+    if (preloadDepth && preloadDepth > 0) await this.preLoad(lastLoadedIndex, preloadDepth)
 
     const dataToLoad = this.data.filter((item) => item.metadata.shouldLoad);
 
