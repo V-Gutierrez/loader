@@ -18,9 +18,6 @@ const dataToBeLoaded = [
 
 const newLoader = new Loader(dataToBeLoaded);
 
-newLoader.data.forEach((item) => {
-  console.log(item);
-})
 
 const loaderFunc = async (url: string) => {
   const response = await fetch(url);
@@ -29,5 +26,11 @@ const loaderFunc = async (url: string) => {
   return data;
 }
 
-
 newLoader.loaderFunction = loaderFunc
+
+async function testLoader() {
+  await newLoader.load<{ name: string, url: string }>("url");
+  console.log(newLoader.data)
+}
+
+testLoader();
