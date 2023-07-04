@@ -1,7 +1,7 @@
 {
-  "name": "preloader-algo",
+  "name": "loader-algo",
   "version": "0.0.1",
-  "description": "My interpretation of a toy preloader algorithm",
+  "description": "My interpretation of a toy loader algorithm",
   "main": "src/main.ts",
   "author": "v-gutierrez",
   "license": "MIT",
