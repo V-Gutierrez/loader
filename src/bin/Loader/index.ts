@@ -1,7 +1,8 @@
-import { LoaderData, RawData } from "./types";
+import { LoaderData, LoaderFunction, RawData } from "./types";
 
 export class Loader<T> {
   private readonly _data: LoaderData<T>[];
+  private loader: LoaderFunction<T> = null;
 
   constructor(data: T[]) {
     this._data = this.transformInputDataIntoLoaderData(data);
@@ -26,10 +27,14 @@ export class Loader<T> {
   }
 
   /**
-   * The function returns an array of LoaderData objects.
-   * @returns The `seeData` method is returning an array of `LoaderData` objects.
+   * The function returns the data stored in the LoaderData array.
+   * @returns The `data` property is being returned.
    */
   public get data(): LoaderData<T>[] {
     return this._data;
+  }
+
+  public setLoader<F extends T>(loader: LoaderFunction<F>): void {
+    this.loader = loader
   }
 }

@@ -12,3 +12,5 @@ export interface LoaderMetadata {
 export interface RawData<K> {
   data: K | any;
 }
+
+export type LoaderFunction<T> = ((data: RawData<T>) => Promise<T>) | null
